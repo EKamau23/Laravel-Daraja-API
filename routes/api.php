@@ -9,5 +9,11 @@ Route::get('/user', function (Request $request): mixed {
 })->middleware('auth:sanctum');
 
 Route::get('/mpesa-token', function (): mixed {
-    return (new MpesaService())->authenticate();
+    return (new MpesaService())->authorize();
 });
+
+Route::get('/stk-callback', function (Request $request): mixed {
+    Log::info(message: 'STK Callback', context: $request->all());
+
+    return response()->json(data: 'Successfully Logged');
+})->name(name: 'stk.callback');
